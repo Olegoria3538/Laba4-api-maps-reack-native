@@ -1,0 +1,20 @@
+import { createStore, createEffect } from "effector"
+import { RootObject } from "../type"
+
+const $data = createStore<RootObject>({})
+
+const getData = createEffect<string, RootObject, any>({
+  handler: async (request) => {
+    const url = `https://geocode-maps.yandex.ru/1.x/?apikey=bd363d28-0cb5-4691-bea0-b87777ad38ad&format=json&geocode=${request}`
+    const req = await fetch(url)
+    return req.json()
+  },
+})
+
+$data.on(getData.done, (_, { result }) => result)
+
+const $arrayAnswer = $data.map(
+  (x) => x.response?.GeoObjectCollection.featureMember || []
+)
+
+export { getData, $arrayAnswer }
