@@ -11,10 +11,11 @@ import { Place } from "../atoms/place"
 import { $result } from "../model/request"
 import { useStore } from "effector-react"
 import { setToggle } from "../model/places-open"
+import { Preloader } from "../atoms/preloader"
 
 export const Places = () => {
   const { arrayAnswer, info } = useStore($result)
-  if (!info) return null
+  if (!info) return <Preloader />
   const formatArray = arrayAnswer.map(
     (x) => x.GeoObject.metaDataProperty.GeocoderMetaData.text
   )
@@ -22,15 +23,17 @@ export const Places = () => {
     <View style={styles.container}>
       <View style={styles.block}>
         <View style={styles.header}>
-          <Text>Результаты: {info.request}</Text>
+          <Text>Результаты по: {info.request}</Text>
           <TouchableWithoutFeedback onPress={() => setToggle(false)}>
             <Text style={styles.close}>×</Text>
           </TouchableWithoutFeedback>
         </View>
         <ScrollView>
-          {[...formatArray, ...formatArray].map((x, i) => (
-            <Place key={i} title={x} />
-          ))}
+          {Number(info.found) ? (
+            formatArray.map((x, i) => <Place key={i} title={x} />)
+          ) : (
+            <Text style={{ padding: 20 }}>Мы ничего не нашли</Text>
+          )}
         </ScrollView>
       </View>
     </View>
