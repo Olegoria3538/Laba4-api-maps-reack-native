@@ -6,7 +6,7 @@ const $data = createStore<RootObject>({})
 const getData = createEvent<string>()
 $data.on(getData, (_, req) => {
   getDataFx(req)
-  const obg = {}
+  const obg = new Object()
   return obg
 })
 

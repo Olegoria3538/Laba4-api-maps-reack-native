@@ -2,14 +2,15 @@ import React from "react"
 import { View, StyleSheet, Text, TouchableOpacity, Alert } from "react-native"
 
 interface PlaceType {
-  title: string
+  text: string
+  onClick: Function
 }
 
-export const Place: React.FC<PlaceType> = ({ title }) => {
+export const Place: React.FC<PlaceType> = ({ text, onClick }) => {
   return (
-    <TouchableOpacity onPress={() => Alert.alert("Страна", title)}>
+    <TouchableOpacity onPress={() => onClick()}>
       <View style={styles.item}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{text}</Text>
       </View>
     </TouchableOpacity>
   )

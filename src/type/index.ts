@@ -1,3 +1,11 @@
+export type selectType = {
+  latitude: number
+  longitude: number
+  title: string
+  description: string
+} | null
+
+
 export interface GeocoderResponseMetaData {
   request: string
   results: string
