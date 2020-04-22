@@ -1,4 +1,4 @@
-import { createStore, createEffect } from "effector"
+import { createStore, createEffect, combine } from "effector"
 import { RootObject } from "../type"
 
 const $data = createStore<RootObject>({})
@@ -17,4 +17,14 @@ const $arrayAnswer = $data.map(
   (x) => x.response?.GeoObjectCollection.featureMember || []
 )
 
-export { getData, $arrayAnswer }
+const $geocoderResponseMetaData = $data.map(
+  (x) =>
+    x.response?.GeoObjectCollection.metaDataProperty.GeocoderResponseMetaData
+)
+
+const $result = combine({
+  arrayAnswer: $arrayAnswer,
+  info: $geocoderResponseMetaData,
+})
+
+export { getData, $result }

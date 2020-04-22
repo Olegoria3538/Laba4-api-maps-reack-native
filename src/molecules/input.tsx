@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import { StyleSheet, View, TextInput, Keyboard, Button } from "react-native"
 import { getData } from "../model/request"
+import { setToggle } from "../model/places-open"
 
 export const Input = () => {
   const [text, setText] = useState<string>("")
@@ -29,7 +30,13 @@ export const Input = () => {
       />
       {focus && (
         <View style={styles.button}>
-          <Button title="Поиск" onPress={() => getData(text)} />
+          <Button
+            title="Поиск"
+            onPress={() => {
+              getData(text)
+              setToggle(true)
+            }}
+          />
         </View>
       )}
     </View>
